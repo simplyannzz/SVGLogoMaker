@@ -1,7 +1,7 @@
 //paclkages
 const inquirer = require('inquirer');
 const fs = require('fs');
-const shapes = require('./lib/shapes');
+const { Circle, Triangle, Square } = require('./lib/shapes');
 
 // questions
 const questions = [
@@ -10,7 +10,7 @@ const questions = [
     {
         type: 'input',
         message: 'Pick 3 characters',
-        name: 'characters',
+        name: 'text',
     },
     {
         type: 'input',
@@ -27,6 +27,49 @@ const questions = [
     {
         type: 'input',
         message: 'Pick a shape color',
-        name: 'shapesColor',
+        name: 'fill',
     },
 ];
+
+const init = () => {
+    inquirer.prompt(questions)
+        .then((data) => {
+            console.log("Creating SVG file ..");
+            switch ('${data.shapes}') {
+                case 'Square':
+                    console.log('Square is being created ...')
+                    const square = new Square(data.fill, data.text, data.textColor)
+                    fs.writeFile("./examples/logo.svg", square, renderSquare(), (err) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("Square is created!")
+                        }
+                    });
+                    break;
+                case 'Circle':
+                    console.log('Circle is being created ...')
+                    const circle = new Circle(data.fill, data.text, data.textColor)
+                    fs.writeFile("./examples/logo.svg", circle, renderCircle(), (err) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("Circle is created!")
+                        }
+                    });
+                    break;
+                case 'Triangle':
+                    console.log('Triangle is being created ...')
+                    const triangle = new Triangle(data.fill, data.text, data.textColor)
+                    fs.writeFile("./examples/logo.svg", triangle, renderTriangle(), (err) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("Triangle is created!")
+                        }
+                    });
+                    break;
+            }
+        })
+}
+init();
