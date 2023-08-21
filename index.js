@@ -1,4 +1,4 @@
-//paclkages
+//packages
 const inquirer = require('inquirer');
 const fs = require('fs');
 const { Circle, Triangle, Square } = require('./lib/shapes');
@@ -30,27 +30,28 @@ const questions = [
         name: 'fill',
     },
 ];
-
+// write files
 const init = () => {
     inquirer.prompt(questions)
         .then((data) => {
-            console.log("Creating SVG file ..");
-            switch ('${data.shapes}') {
+            console.log("Generated logo.svg");
+            switch (`${data.shapes}`) {
                 case 'Square':
                     console.log('Square is being created ...')
                     const square = new Square(data.fill, data.text, data.textColor)
-                    fs.writeFile("./examples/logo.svg", square, renderSquare(), (err) => {
+                    fs.writeFile("./examples/logo.svg", square.renderSquare(), (err) => {
                         if (err) {
                             console.log(err);
                         } else {
                             console.log("Square is created!")
                         }
+                        // console.log(square)
                     });
                     break;
                 case 'Circle':
                     console.log('Circle is being created ...')
                     const circle = new Circle(data.fill, data.text, data.textColor)
-                    fs.writeFile("./examples/logo.svg", circle, renderCircle(), (err) => {
+                    fs.writeFile("./examples/logo.svg", circle.rendercircle(), (err) => {
                         if (err) {
                             console.log(err);
                         } else {
@@ -61,7 +62,7 @@ const init = () => {
                 case 'Triangle':
                     console.log('Triangle is being created ...')
                     const triangle = new Triangle(data.fill, data.text, data.textColor)
-                    fs.writeFile("./examples/logo.svg", triangle, renderTriangle(), (err) => {
+                    fs.writeFile("./examples/logo.svg", triangle.renderTriangle(), (err) => {
                         if (err) {
                             console.log(err);
                         } else {
@@ -70,6 +71,6 @@ const init = () => {
                     });
                     break;
             }
-        })
+        });
 }
 init();
